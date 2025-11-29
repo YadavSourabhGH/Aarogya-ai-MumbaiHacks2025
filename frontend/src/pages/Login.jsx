@@ -31,7 +31,7 @@ const Login = () => {
         setLoading(true);
         setError('');
         try {
-            await axios.post('http://localhost:4000/auth/send-otp', { email });
+            await axios.post('https://aarogya-ai-personal.onrender.com/auth/send-otp', { email });
             setStep(2);
             setTimer(30);
         } catch (err) {
@@ -46,13 +46,13 @@ const Login = () => {
         setLoading(true);
         setError('');
         try {
-            const { data } = await axios.post('http://localhost:4000/auth/verify-otp', { email, otp });
+            const { data } = await axios.post('https://aarogya-ai-personal.onrender.com/auth/verify-otp', { email, otp });
 
             if (data.valid && !data.isNewUser) {
                 localStorage.setItem('userInfo', JSON.stringify(data));
                 // Redirect based on role
                 if (data.role === 'doctor') {
-                    navigate('/curesight/search');
+                    navigate('/aarogya-ai/search');
                 } else {
                     navigate('/dashboard');
                 }
@@ -74,15 +74,31 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        // Simulation Account Bypass
+        if (email === 'hospital@aarogya.com') {
+            localStorage.setItem('userInfo', JSON.stringify({
+                name: 'Hospital Admin',
+                email: 'hospital@aarogya.com',
+                role: 'hospital',
+                token: 'simulation-token'
+            }));
+            setLoading(false);
+            navigate('/federated-learning');
+            return;
+        }
+
         try {
-            const { data } = await axios.post('http://localhost:4000/auth/login', {
+            const { data } = await axios.post('https://aarogya-ai-personal.onrender.com/auth/login', {
                 email,
                 password,
             });
             localStorage.setItem('userInfo', JSON.stringify(data));
             // Redirect based on role
             if (data.role === 'doctor') {
-                navigate('/curesight/search');
+                navigate('/aarogya-ai/search');
+            } else if (email === 'hospital@aarogya.com') {
+                navigate('/federated-learning');
             } else {
                 navigate('/dashboard');
             }

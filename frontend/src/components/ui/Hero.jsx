@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import AnimatedButton from './AnimatedButton';
 import { ArrowRight, Activity, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import dashboardGraph from '../../assets/dashboard_graph.png';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -65,39 +66,22 @@ const Hero = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative"
+                    className="relative flex justify-center items-center"
                 >
-                    <div className="relative z-10 bg-white/40 backdrop-blur-xl rounded-3xl border border-white/50 shadow-2xl p-6 transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
-                        <div className="absolute top-4 right-4 flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                            <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                        </div>
-                        <div className="mt-8 space-y-4">
-                            <div className="h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
-                                <Activity className="w-16 h-16 text-primary/50" />
-                            </div>
-                            <div className="space-y-2">
-                                <div className="h-4 w-3/4 bg-gray-200 rounded animate-pulse"></div>
-                                <div className="h-4 w-1/2 bg-gray-200 rounded animate-pulse"></div>
-                            </div>
-                            <div className="pt-4 border-t border-gray-100">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-sm font-medium text-gray-600">Risk Assessment</span>
-                                    <span className="text-sm font-bold text-red-500">High Priority</span>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                                    <div className="bg-gradient-to-r from-primary to-accent h-2.5 rounded-full w-[85%]"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Decorative Blob behind image */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-200 to-purple-200 rounded-full blur-3xl opacity-30 transform scale-110" />
+
+                    <img
+                        src={dashboardGraph}
+                        alt="AI Health Analysis Dashboard"
+                        className="relative z-10 w-full max-w-lg rounded-3xl shadow-2xl transform rotate-[-3deg] hover:rotate-0 transition-all duration-700 border-[8px] border-white hover:shadow-primary/20"
+                    />
 
                     {/* Floating Elements */}
                     <motion.div
-                        animate={{ y: [0, -20, 0] }}
+                        animate={{ y: [0, -15, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -top-10 -right-10 bg-white p-4 rounded-2xl shadow-xl z-20"
+                        className="absolute -top-6 -right-4 md:-right-10 bg-white p-4 rounded-2xl shadow-xl z-20 border border-gray-100"
                     >
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-green-100 rounded-lg">

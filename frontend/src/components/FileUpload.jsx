@@ -29,7 +29,7 @@ const FileUpload = ({ onUploadSuccess }) => {
                 },
             };
 
-            await axios.post('http://localhost:4000/records/upload', formData, config);
+            await axios.post('https://aarogya-ai-personal.onrender.com/records/upload', formData, config);
 
             setMessage({ type: 'success', text: 'File uploaded successfully!' });
             if (onUploadSuccess) onUploadSuccess();

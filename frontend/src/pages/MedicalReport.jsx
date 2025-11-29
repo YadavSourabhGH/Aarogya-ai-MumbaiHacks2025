@@ -6,8 +6,7 @@ import { AlertCircle, CheckCircle, XCircle, Calendar, MapPin, Phone, Loader2 } f
 import ShapChart from '../components/ShapChart';
 import GradCAMOverlay from '../components/GradCAMOverlay';
 
-// Mock X-ray image path (we'll use the generated image)
-const MOCK_XRAY_IMAGE = '/Users/sourabhyadav/.gemini/antigravity/brain/59f5a62c-892b-44db-9bae-662455bc6e0a/chest_xray_sample_1764309154715.png';
+
 
 const MedicalReport = () => {
     const { analysisId } = useParams();
@@ -19,9 +18,13 @@ const MedicalReport = () => {
     const [loading, setLoading] = useState(true);
     const [doctorNotes, setDoctorNotes] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
         fetchAnalysisResults();
+        return () => {
+            if (imageUrl) URL.revokeObjectURL(imageUrl);
+        };
     }, [analysisId]);
 
     const fetchAnalysisResults = async () => {
@@ -30,9 +33,32 @@ const MedicalReport = () => {
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
             // Fetch specific analysis by ID
-            const { data } = await axios.get(`http://localhost:4000/ai/analysis/${analysisId}`, config);
+            const { data } = await axios.get(`https://aarogya-ai-personal.onrender.com/ai/analysis/${analysisId}`, config);
             setAnalysis(data);
 
+            // Fetch Image if available
+            let url = null;
+            if (data.documentIds && data.documentIds.length > 0) {
+                const imageDoc = data.documentIds.find(doc => doc.mimeType && doc.mimeType.startsWith('image/'));
+                if (imageDoc) {
+                    try {
+                        const imageRes = await axios.get(`https://aarogya-ai-personal.onrender.com/records/file/${imageDoc.fileUrl}`, {
+                            ...config,
+                            responseType: 'blob'
+                        });
+                        url = URL.createObjectURL(imageRes.data);
+                    } catch (imgErr) {
+                        console.error("Error fetching image:", imgErr);
+                    }
+                }
+            }
+
+            // Set fallback if no image found or fetch failed
+            if (!url) {
+                url = 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Normal_posteroanterior_%28PA%29_chest_radiograph_%28X-ray%29.jpg';
+            }
+
+            setImageUrl(url);
         } catch (error) {
             console.error('Error fetching analysis:', error);
         } finally {
@@ -47,14 +73,14 @@ const MedicalReport = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            await axios.post('http://localhost:4000/doctor/review', {
+            await axios.post('https://aarogya-ai-personal.onrender.com/doctor/review', {
                 resultId: analysisId,
                 decision,
                 notes: doctorNotes
             }, config);
 
             // Navigate to patient handout
-            navigate('/curesight/handout', {
+            navigate('/aarogya-ai/handout', {
                 state: { analysisId, abhaId }
             });
 
@@ -152,10 +178,16 @@ const MedicalReport = () => {
                         <p className="text-gray-600 mb-6 text-sm">
                             GradCAM heatmap highlighting regions of concern
                         </p>
-                        <GradCAMOverlay
-                            imageUrl={MOCK_XRAY_IMAGE}
-                            heatmapData={analysis.gradcamHeatmap}
-                        />
+                        {imageUrl ? (
+                            <GradCAMOverlay
+                                imageUrl={imageUrl}
+                                heatmapData={analysis.gradcamHeatmap}
+                            />
+                        ) : (
+                            <div className="h-64 flex items-center justify-center bg-gray-100 rounded-lg border border-gray-200">
+                                <p className="text-gray-500">Loading X-Ray...</p>
+                            </div>
+                        )}
                     </motion.div>
                 </div>
 

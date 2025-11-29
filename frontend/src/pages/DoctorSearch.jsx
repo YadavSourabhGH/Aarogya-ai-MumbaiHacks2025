@@ -15,7 +15,7 @@ const DoctorSearch = () => {
         const userInfo = localStorage.getItem('userInfo');
         if (!userInfo) {
             // Redirect to login if not authenticated
-            navigate('/login', { state: { from: '/curesight/search' } });
+            navigate('/login', { state: { from: '/aarogya-ai/search' } });
         }
     }, [navigate]);
 
@@ -33,20 +33,20 @@ const DoctorSearch = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
             if (!userInfo || !userInfo.token) {
-                navigate('/login', { state: { from: '/curesight/search' } });
+                navigate('/login', { state: { from: '/aarogya-ai/search' } });
                 return;
             }
 
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            const { data } = await axios.get(`http://localhost:4000/abha/verify/${value}`, config);
+            const { data } = await axios.get(`https://aarogya-ai-personal.onrender.com/abha/verify/${value}`, config);
 
             setValidation(data);
 
             // Auto-advance to consent flow if valid
             if (data.valid && data.registered) {
                 setTimeout(() => {
-                    navigate('/curesight/consent', { state: { abhaId: value } });
+                    navigate('/aarogya-ai/consent', { state: { abhaId: value } });
                 }, 1500);
             }
 
@@ -81,7 +81,7 @@ const DoctorSearch = () => {
                 >
                     <div className="flex items-center justify-center gap-3 mb-4">
                         <Activity className="w-12 h-12 text-medical-blue" strokeWidth={2.5} />
-                        <h1 className="text-5xl font-bold text-gradient">CureSight AI</h1>
+                        <h1 className="text-5xl font-bold text-gradient">Aarogya AI</h1>
                     </div>
                     <p className="text-xl text-gray-600 font-medium">Advanced Cancer Screening Platform</p>
                     <p className="text-sm text-gray-500 mt-2">Powered by ABDM & Multi-Modal AI Analysis</p>
@@ -167,21 +167,7 @@ const DoctorSearch = () => {
                             </motion.div>
                         )}
 
-                        {/* Example IDs */}
-                        <div className="mt-8 pt-6 border-t border-gray-200">
-                            <p className="text-sm text-gray-500 mb-3">Demo ABHA IDs:</p>
-                            <div className="flex flex-wrap gap-2">
-                                {['ramesh@abdm', 'priya@abdm', 'amit@abdm'].map((id) => (
-                                    <button
-                                        key={id}
-                                        onClick={() => handleSearch(id)}
-                                        className="px-4 py-2 text-sm bg-gray-100 hover:bg-medical-blue hover:text-white rounded-lg transition-colors duration-200"
-                                    >
-                                        {id}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+
                     </div>
                 </motion.div>
 

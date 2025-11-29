@@ -19,7 +19,7 @@ const AnalysisProcessing = () => {
 
     useEffect(() => {
         if (!analysisId) {
-            navigate('/curesight/search');
+            navigate('/aarogya-ai/search');
             return;
         }
 
@@ -41,7 +41,7 @@ const AnalysisProcessing = () => {
                     clearInterval(progressInterval);
                     // Navigate to results after completion
                     setTimeout(() => {
-                        navigate(`/curesight/report/${analysisId}`, {
+                        navigate(`/aarogya-ai/report/${analysisId}`, {
                             state: { abhaId }
                         });
                     }, 1000);
@@ -61,9 +61,9 @@ const AnalysisProcessing = () => {
         <div className="min-h-screen medical-gradient flex items-center justify-center px-4">
             <div className="max-w-4xl w-full">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-center"
+                    className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-white/20 text-center"
                 >
                     {/* Title */}
                     <h1 className="text-4xl font-bold text-white mb-4">
@@ -91,10 +91,10 @@ const AnalysisProcessing = () => {
                                     >
                                         {/* Gear Circle */}
                                         <div className={`relative w-32 h-32 rounded-full flex items-center justify-center border-4 transition-all duration-500 ${isActive
-                                                ? 'border-white bg-white/20 shadow-2xl shadow-white/50'
-                                                : isCompleted
-                                                    ? 'border-green-300 bg-green-500/30'
-                                                    : 'border-white/40 bg-white/5'
+                                            ? 'border-white bg-white/20 shadow-2xl shadow-white/50'
+                                            : isCompleted
+                                                ? 'border-green-300 bg-green-500/30'
+                                                : 'border-white/40 bg-white/5'
                                             }`}>
                                             {isActive && (
                                                 <motion.div
@@ -105,10 +105,10 @@ const AnalysisProcessing = () => {
                                             )}
 
                                             <Icon className={`w-12 h-12 transition-all duration-500 ${isActive
-                                                    ? 'text-white'
-                                                    : isCompleted
-                                                        ? 'text-green-300'
-                                                        : 'text-white/40'
+                                                ? 'text-white'
+                                                : isCompleted
+                                                    ? 'text-green-300'
+                                                    : 'text-white/40'
                                                 }`} />
 
                                             {isCompleted && (
@@ -125,10 +125,10 @@ const AnalysisProcessing = () => {
                                         {/* Label */}
                                         <div className="mt-4 text-center">
                                             <p className={`font-bold text-sm transition-all duration-500 ${isActive
-                                                    ? 'text-white'
-                                                    : isCompleted
-                                                        ? 'text-green-300'
-                                                        : 'text-white/50'
+                                                ? 'text-white'
+                                                : isCompleted
+                                                    ? 'text-green-300'
+                                                    : 'text-white/50'
                                                 }`}>
                                                 {phase.name}
                                             </p>
@@ -149,27 +149,23 @@ const AnalysisProcessing = () => {
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="mt-8">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-blue-100">Processing...</span>
-                            <span className="text-sm text-white font-bold">{Math.round(progress)}%</span>
+                    <div className="relative pt-8 max-w-2xl mx-auto">
+                        <div className="flex justify-between text-sm font-medium text-blue-100 mb-2">
+                            <span>Processing...</span>
+                            <span>{Math.round(progress)}%</span>
                         </div>
-                        <div className="w-full h-3 bg-white/20 rounded-full overflow-hidden">
+                        <div className="h-2 bg-white/20 rounded-full overflow-hidden">
                             <motion.div
-                                className="h-full bg-gradient-to-r from-green-400 to-teal-300 rounded-full"
+                                className="h-full bg-gradient-to-r from-green-400 to-emerald-500"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
-                                transition={{ duration: 0.3 }}
+                                transition={{ ease: "linear" }}
                             />
                         </div>
-                    </div>
-
-                    {/* Loading Dots */}
-                    <div className="mt-8 flex items-center justify-center gap-2">
-                        <Loader2 className="w-5 h-5 text-white/70 animate-spin" />
-                        <span className="text-white/70 text-sm">
+                        <p className="text-center text-xs text-blue-200/60 mt-4 flex items-center justify-center gap-2">
+                            <Loader2 className="w-3 h-3 animate-spin" />
                             This may take 5-10 seconds
-                        </span>
+                        </p>
                     </div>
                 </motion.div>
             </div>

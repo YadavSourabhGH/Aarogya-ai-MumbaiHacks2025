@@ -18,7 +18,7 @@ const DoctorDashboard = () => {
         try {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            const { data } = await axios.get('http://localhost:4000/doctor/results', config);
+            const { data } = await axios.get('https://aarogya-ai-personal.onrender.com/doctor/results', config);
             setResults(data);
         } catch (error) {
             console.error("Error fetching results", error);
@@ -32,7 +32,7 @@ const DoctorDashboard = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            await axios.post('http://localhost:4000/doctor/review', {
+            await axios.post('https://aarogya-ai-personal.onrender.com/doctor/review', {
                 resultId,
                 decision,
                 notes: reviewNotes

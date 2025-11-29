@@ -23,7 +23,7 @@ const PatientHandout = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            const { data } = await axios.get(`http://localhost:4000/ai/analysis/${analysisId}`, config);
+            const { data } = await axios.get(`https://aarogya-ai-personal.onrender.com/ai/analysis/${analysisId}`, config);
             setAnalysis(data);
 
         } catch (error) {
@@ -33,14 +33,25 @@ const PatientHandout = () => {
         }
     };
 
-    const pushToABHA = () => {
+    const pushToABHA = async () => {
         setPushing(true);
 
-        // Simulate push to ABHA locker
-        setTimeout(() => {
-            setPushing(false);
+        try {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
+
+            await axios.post('https://aarogya-ai-personal.onrender.com/doctor/push-locker', {
+                analysisId,
+                abhaId
+            }, config);
+
             setPushed(true);
-        }, 2000);
+        } catch (error) {
+            console.error('Push to locker error:', error);
+            alert('Failed to push to ABHA locker');
+        } finally {
+            setPushing(false);
+        }
     };
 
     const downloadPDF = () => {
@@ -97,7 +108,7 @@ const PatientHandout = () => {
                         <FileText className="w-8 h-8 text-medical-blue" />
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900">Patient Report</h2>
-                            <p className="text-sm text-gray-500">CureSight AI Cancer Screening</p>
+                            <p className="text-sm text-gray-500">Aarogya AI AI Cancer Screening</p>
                         </div>
                     </div>
 
@@ -221,7 +232,7 @@ const PatientHandout = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
-                        onClick={() => navigate('/curesight/search')}
+                        onClick={() => navigate('/aarogya-ai/search')}
                         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
                     >
                         <Home className="w-5 h-5" />

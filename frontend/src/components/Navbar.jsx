@@ -41,8 +41,11 @@ const Navbar = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             if (!userInfo) return;
 
+            // Skip for simulation account
+            if (userInfo.email === 'hospital@aarogya.com') return;
+
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            const { data } = await axios.get('http://localhost:4000/auth/user/me', config);
+            const { data } = await axios.get('https://aarogya-ai-personal.onrender.com/auth/user/me', config);
 
             if (data.pendingConsent && data.pendingConsent.status === 'pending') {
                 setHasPendingConsent(true);
@@ -102,7 +105,10 @@ const Navbar = () => {
                         <>
                             {user ? (
                                 <>
-                                    <Link to="/dashboard" className="text-gray-600 hover:text-primary font-medium transition-colors">
+                                    <Link
+                                        to={user.email === 'hospital@aarogya.com' ? '/federated-learning' : '/dashboard'}
+                                        className="text-gray-600 hover:text-primary font-medium transition-colors"
+                                    >
                                         Dashboard
                                     </Link>
                                     <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
@@ -155,7 +161,13 @@ const Navbar = () => {
                         <div className="flex flex-col p-4 space-y-4">
                             {user ? (
                                 <>
-                                    <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Dashboard</Link>
+                                    <Link
+                                        to={user.email === 'hospital@aarogya.com' ? '/federated-learning' : '/dashboard'}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="text-gray-600 font-medium"
+                                    >
+                                        Dashboard
+                                    </Link>
                                     <div className="flex justify-between items-center pt-4 border-t border-gray-100">
                                         <span className="text-sm font-medium text-gray-700">{user.name}</span>
                                         <button onClick={() => { logoutHandler(); setMobileMenuOpen(false); }} className="text-red-500 text-sm font-medium">Logout</button>

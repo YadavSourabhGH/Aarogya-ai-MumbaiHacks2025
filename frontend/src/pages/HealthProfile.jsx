@@ -39,7 +39,7 @@ const HealthProfile = () => {
         try {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            const { data } = await axios.get('http://localhost:4000/patient/profile', config);
+            const { data } = await axios.get('https://aarogya-ai-personal.onrender.com/profile/me', config);
             if (data) {
                 setProfile(data);
             }
@@ -54,7 +54,7 @@ const HealthProfile = () => {
         try {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-            await axios.put('http://localhost:4000/patient/profile', profile, config);
+            await axios.put('https://aarogya-ai-personal.onrender.com/patient/profile', profile, config);
             alert('Profile updated successfully!');
             navigate('/dashboard');
         } catch (error) {
@@ -341,6 +341,63 @@ const HealthProfile = () => {
                             </div>
                         </div>
                     </motion.div>
+
+                    {/* Questionnaire Data (Read-Only) */}
+                    {profile.questionnaireData && profile.questionnaireData.lastUpdated && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.25 }}
+                            className="bg-white rounded-2xl shadow-lg p-8"
+                        >
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-3 bg-teal-100 rounded-lg">
+                                    <FileText className="h-6 w-6 text-teal-600" />
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-900">Latest Questionnaire</h2>
+                                    <p className="text-sm text-gray-500">
+                                        Last updated: {new Date(profile.questionnaireData.lastUpdated).toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="p-4 bg-gray-50 rounded-lg">
+                                    <p className="text-sm text-gray-600 mb-1">Smoker</p>
+                                    <p className="font-semibold text-gray-900">
+                                        {profile.questionnaireData.isSmoker ? 'Yes' : 'No'}
+                                    </p>
+                                    {profile.questionnaireData.smokingDuration && (
+                                        <p className="text-sm text-gray-600 mt-1">{profile.questionnaireData.smokingDuration}</p>
+                                    )}
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-lg">
+                                    <p className="text-sm text-gray-600 mb-1">Coughing Blood</p>
+                                    <p className="font-semibold text-gray-900">
+                                        {profile.questionnaireData.coughingBlood ? 'Yes' : 'No'}
+                                    </p>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-lg">
+                                    <p className="text-sm text-gray-600 mb-1">Family History of Cancer</p>
+                                    <p className="font-semibold text-gray-900">
+                                        {profile.questionnaireData.familyHistory ? 'Yes' : 'No'}
+                                    </p>
+                                </div>
+                                {profile.questionnaireData.otherSymptoms && (
+                                    <div className="p-4 bg-gray-50 rounded-lg md:col-span-2">
+                                        <p className="text-sm text-gray-600 mb-1">Other Symptoms</p>
+                                        <p className="font-semibold text-gray-900">{profile.questionnaireData.otherSymptoms}</p>
+                                    </div>
+                                )}
+                                {profile.questionnaireData.additionalNotes && (
+                                    <div className="p-4 bg-gray-50 rounded-lg md:col-span-2">
+                                        <p className="text-sm text-gray-600 mb-1">Additional Notes</p>
+                                        <p className="font-semibold text-gray-900">{profile.questionnaireData.additionalNotes}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    )}
 
                     {/* Submit Button */}
                     <motion.div

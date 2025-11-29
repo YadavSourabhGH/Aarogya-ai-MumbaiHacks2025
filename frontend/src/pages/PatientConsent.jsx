@@ -30,7 +30,7 @@ const PatientConsent = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            const { data } = await axios.get('http://localhost:4000/auth/user/me', config);
+            const { data } = await axios.get('https://aarogya-ai-personal.onrender.com/auth/user/me', config);
 
             if (data.pendingConsent && data.pendingConsent.status === 'pending') {
                 setPendingConsent(data.pendingConsent);
@@ -52,7 +52,7 @@ const PatientConsent = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            await axios.post(`http://localhost:4000/consent/approve/${pendingConsent.consentId}`, {}, config);
+            await axios.post(`https://aarogya-ai-personal.onrender.com/consent/approve/${pendingConsent.consentId}`, {}, config);
 
             setPendingConsent(null);
             // Show success message
@@ -73,7 +73,7 @@ const PatientConsent = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            await axios.post(`http://localhost:4000/consent/reject/${pendingConsent.consentId}`, {}, config);
+            await axios.post(`https://aarogya-ai-personal.onrender.com/consent/reject/${pendingConsent.consentId}`, {}, config);
 
             setPendingConsent(null);
             alert('Consent rejected');
@@ -153,7 +153,7 @@ const PatientConsent = () => {
                     <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
                         <h3 className="font-bold text-purple-900 mb-2">Purpose</h3>
                         <p className="text-sm text-purple-800">
-                            Cancer Screening via CureSight AI
+                            Cancer Screening via Aarogya AI AI
                         </p>
                     </div>
 

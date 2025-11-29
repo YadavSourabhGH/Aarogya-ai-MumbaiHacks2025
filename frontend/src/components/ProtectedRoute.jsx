@@ -16,7 +16,7 @@ const ProtectedRoute = ({ allowedRoles = [] }) => {
         if (role === 'patient') {
             return <Navigate to="/dashboard" replace />;
         } else if (role === 'doctor') {
-            return <Navigate to="/curesight/search" replace />;
+            return <Navigate to="/aarogya-ai/search" replace />;
         } else {
             return <Navigate to="/" replace />;
         }

@@ -15,7 +15,7 @@ const ConsentFlow = () => {
 
     useEffect(() => {
         if (!abhaId) {
-            navigate('/curesight/search');
+            navigate('/aarogya-ai/search');
             return;
         }
         requestConsent();
@@ -26,7 +26,7 @@ const ConsentFlow = () => {
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
             const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
 
-            const { data } = await axios.post('http://localhost:4000/consent/request', {
+            const { data } = await axios.post('https://aarogya-ai-personal.onrender.com/consent/request', {
                 abhaId
             }, config);
 
@@ -45,7 +45,7 @@ const ConsentFlow = () => {
     const pollConsentStatus = (id, config) => {
         const interval = setInterval(async () => {
             try {
-                const { data } = await axios.get(`http://localhost:4000/consent/status/${id}`, config);
+                const { data } = await axios.get(`https://aarogya-ai-personal.onrender.com/consent/status/${id}`, config);
 
                 if (data.consent.status === 'approved') {
                     setConsentStatus('approved');
@@ -53,7 +53,7 @@ const ConsentFlow = () => {
 
                     // Navigate to data aggregation after 2 seconds
                     setTimeout(() => {
-                        navigate('/curesight/aggregate', {
+                        navigate('/aarogya-ai/aggregate', {
                             state: { abhaId, consentId: id }
                         });
                     }, 2000);
@@ -197,7 +197,7 @@ const ConsentFlow = () => {
                                             <div className="bg-gradient-to-br from-blue-500 to-teal-500 rounded-2xl p-6 shadow-lg">
                                                 <div className="flex items-center gap-3 mb-4">
                                                     <Smartphone className="w-6 h-6 text-white" />
-                                                    <span className="text-white font-bold">CureSight AI</span>
+                                                    <span className="text-white font-bold">Aarogya AI AI</span>
                                                 </div>
 
                                                 <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 mb-4">

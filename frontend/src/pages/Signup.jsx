@@ -32,7 +32,7 @@ const Signup = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('http://localhost:4000/auth/send-otp', { email });
+            await axios.post('https://aarogya-ai-personal.onrender.com/auth/send-otp', { email });
             setStep(2);
             setTimer(30); // Start 30s cooldown
             setError('');
@@ -46,7 +46,7 @@ const Signup = () => {
     const resendOtpHandler = async () => {
         setLoading(true);
         try {
-            await axios.post('http://localhost:4000/auth/send-otp', { email });
+            await axios.post('https://aarogya-ai-personal.onrender.com/auth/send-otp', { email });
             setTimer(30);
             setError('');
         } catch (err) {
@@ -60,7 +60,7 @@ const Signup = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const { data } = await axios.post('http://localhost:4000/auth/verify-otp', { email, otp });
+            const { data } = await axios.post('https://aarogya-ai-personal.onrender.com/auth/verify-otp', { email, otp });
             setSignupToken(data.signupToken);
             setStep(3);
             setError('');
@@ -75,7 +75,7 @@ const Signup = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const { data } = await axios.post('http://localhost:4000/auth/signup', {
+            const { data } = await axios.post('https://aarogya-ai-personal.onrender.com/auth/signup', {
                 name,
                 email,
                 password,
@@ -85,7 +85,7 @@ const Signup = () => {
             localStorage.setItem('userInfo', JSON.stringify(data));
             // Redirect based on role
             if (data.role === 'doctor') {
-                navigate('/curesight/search');
+                navigate('/aarogya-ai/search');
             } else {
                 navigate('/dashboard');
             }
