@@ -56,7 +56,7 @@ Designed for **hospitals, clinics, research institutions**, and **health-tech in
 
 ### Late-Stage Cancer Detection in India
 
-- **70% of cancer cases** in India are detected at **advanced stages** (Stage III/IV), when treatment options are limited and survival rates drop significantly.
+- **87% of cancer cases** in India are detected at **advanced stages** (Stage III/IV), when treatment options are limited and survival rates drop significantly.
 - **Early detection** can improve **5-year survival rates by up to 90%** for many cancer types.
 - **Barriers to early detection:**
   - Lack of accessible screening infrastructure in rural and semi-urban areas
