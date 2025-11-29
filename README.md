@@ -1091,10 +1091,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 📞 Contact & Support
 
 - **Project Lead**: Sourabh Yadav ([@YadavSourabhGH](https://github.com/YadavSourabhGH))
-- **Email**: [contact@aarogya-ai.com](mailto:contact@aarogya-ai.com)
 - **GitHub Issues**: [Report bugs or request features](https://github.com/YadavSourabhGH/Aarogya-ai-MumbaiHacks2025/issues)
-- **Twitter**: [@AarogyaAI](https://twitter.com/AarogyaAI)
-- **LinkedIn**: [Aarogya AI](https://linkedin.com/company/aarogya-ai)
 
 ---
 
