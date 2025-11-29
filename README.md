@@ -12,6 +12,28 @@
 
 [Features](#-key-features) • [Architecture](#-system-architecture) • [Installation](#-installation--setup) • [Demo](#-screenshots) • [Contributing](#-contributing)
 
+<!-- Screenshot Showcase (Embedded Early for Visual Impact) -->
+<div align="center">
+  <p><strong>Platform Preview</strong></p>
+  <img src="./screenshots/herosection.png" alt="Hero Section" width="850" />
+  <br/>
+  <img src="./screenshots/d1.png" alt="Dashboard View 1" width="260" />
+  <img src="./screenshots/d2.png" alt="Dashboard View 2" width="260" />
+  <img src="./screenshots/d3.png" alt="Dashboard View 3" width="260" />
+  <br/>
+  <img src="./screenshots/d4.png" alt="Risk Analytics" width="260" />
+  <img src="./screenshots/d5.png" alt="Model Insights" width="260" />
+  <img src="./screenshots/hospital.png" alt="Hospital Network" width="260" />
+  <br/>
+  <img src="./screenshots/u1.png" alt="User Flow 1" width="160" />
+  <img src="./screenshots/u2.png" alt="User Flow 2" width="160" />
+  <img src="./screenshots/u3.png" alt="User Flow 3" width="160" />
+  <img src="./screenshots/u4.png" alt="User Flow 4" width="160" />
+  <img src="./screenshots/u5.png" alt="User Flow 5" width="160" />
+  <img src="./screenshots/u6.png" alt="User Flow 6" width="160" />
+  <p><em>Early cancer detection interface: dashboards, user journeys, hospital network & explainability layers.</em></p>
+</div>
+
 </div>
 
 ---
